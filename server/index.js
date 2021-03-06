@@ -8,6 +8,7 @@ const app = express();
 app.use(express.json())
 
 app.use('/auth', require('./routers/userRouter'))
+app.use('/product', require('./routers/productRouter'))
 
 const PORT = 5000;
 app.listen(PORT, () => {
