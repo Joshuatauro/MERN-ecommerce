@@ -90,4 +90,31 @@ router.get("/:id", async(req, res) => {
   }
 })
 
+//to get products within a range
+router.get("/filter/lt/:lt/ht/:ht", async(req, res) => {
+  const lowerLimit = req.params.lt
+  const higherLimit = req.params.ht
+
+
+  try {
+    const products = await Product.find({productPrice: {$gt: parseInt(lowerLimit), $lt: parseInt(higherLimit)}}).sort({productPrice: 1})
+
+    res.status(200).json(
+      {
+        numOfResults: products.length,
+        products
+      }
+    )
+  } catch (err) {
+    res.status(400).json(
+      {
+        errorMessage: "Something went wrong, please hold tight"
+      }
+    )
+  }
+})
+
+
+
+
 module.exports = router
